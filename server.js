@@ -20,7 +20,7 @@ app.post('/messages', (req, res) => {
   res.sendStatus(200)
 })
 
-var server = app.listen(3000, () => {
+var server = app.listen(80, () => {
   console.log('server is listening on port', server.address().port)
 })
 
