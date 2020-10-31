@@ -20,7 +20,12 @@ app.post('/messages', (req, res) => {
   res.sendStatus(200)
 })
 
-var server = app.listen(80, () => {
+let port = process.env.PORT;
+if (port == null || port == "") {
+    port = 3000;
+}
+
+var server = app.listen(port, () => {
   console.log('server is listening on port', server.address().port)
 })
 
