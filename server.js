@@ -50,23 +50,47 @@ app.get('/messages', (req, res) => {
 //  })
 //})
 
+//app.post('/messages', async (req, res) => {
+//  var message = new Message(req.body)
+//
+//  var savedMessage = await message.save()
+//
+//  console.log('saved')
+//
+//  var censored = await Message.findOne({message: 'badword'})
+//
+//  if (censored)
+//    await Message.deleteMany({_id: censored.id})
+//  else
+//    io.emit('message', req.body)
+//
+//  res.sendStatus(200)
+//})
+
 app.post('/messages', async (req, res) => {
-  var message = new Message(req.body)
 
-  var savedMessage = await message.save()
+  try {
+    var message = new Message(req.body)
 
-  console.log('saved')
+    var savedMessage = await message.save()
 
-  var censored = await Message.findOne({message: 'badword'})
+    console.log('saved')
 
-  if (censored)
-    await Message.deleteMany({_id: censored.id})
-  else
-    io.emit('message', req.body)
+    var censored = await Message.findOne({message: 'badword'})
 
-  res.sendStatus(200)
+    if (censored)
+      await Message.deleteMany({_id: censored.id})
+    else
+      io.emit('message', req.body)
+
+    res.sendStatus(200)
+  } catch (error) {
+    res.sendStatus(500)
+    console.error(error)
+  } finally {
+    console.log('message post called')
+  }
 })
-
 
 io.on('connection', (socket) => {
   console.log('user connected')
