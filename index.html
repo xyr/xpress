@@ -19,6 +19,10 @@
   </div>
 </div>
 <script>
+  var my_url = "https://howdymika.herokuapp.com"
+  //var my_url = "http://localhost:3000"
+  var my_messages_url = my_url + "/messages"
+
   $(() => {
     $("#send").click(() => {
       var message = { name: $("#name").val(), message: $("#message").val()}
@@ -32,13 +36,13 @@
   }
 
   function getMessages() {
-    $.get('https://howdymika.herokuapp.com/messages', (data) => {
+    $.get(my_messages_url, (data) => {
       data.forEach(addMessages);
     });
   }
 
   function postMessage(message) {
-    $.post('https://howdymika.herokuapp.com/messages', message)
+    $.post(my_messages_url, message)
   }
 
 </script>
